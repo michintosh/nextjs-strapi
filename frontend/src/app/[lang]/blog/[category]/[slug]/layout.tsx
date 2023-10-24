@@ -3,7 +3,7 @@ import React from "react";
 import ArticleSelect from "@/app/[lang]/components/ArticleSelect";
 import { fetchAPI } from "@/app/[lang]/utils/fetch-api";
 
-async function fetchSideMenuData(filter: string) {
+async function fetchSideMenuData(filter: string, lang: string) {
   try {
     const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
     const options = { headers: { Authorization: `Bearer ${token}` } };
@@ -23,6 +23,7 @@ async function fetchSideMenuData(filter: string) {
                 name: filter,
               },
             },
+            locale: lang,
           }
         : {},
       options
@@ -69,10 +70,11 @@ export default async function LayoutRoute({
   params: {
     slug: string;
     category: string;
+    lang: string;
   };
 }) {
   const { category } = params;
-  const { categories, articles } = (await fetchSideMenuData(category)) as Data;
+  const { categories, articles } = (await fetchSideMenuData(category,params.lang)) as Data;
 
   return (
     <section className="container p-8 mx-auto space-y-6 sm:space-y-12">

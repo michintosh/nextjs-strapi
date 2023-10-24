@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import { CgWebsite } from "react-icons/cg";
 import { FaDiscord } from "react-icons/fa";
 import { AiFillTwitterCircle, AiFillYoutube } from "react-icons/ai";
+import useTranslations from "@/app/hooks/useTranslations";
 
 interface FooterLink {
   id: number;
@@ -81,6 +82,7 @@ export default function Footer({
   legalLinks: Array<FooterLink>;
   socialLinks: Array<FooterLink>;
 }) {
+  const { getString } = useTranslations();
 
   return (
     <footer className="py-6 dark:bg-black dark:text-gray-50">
@@ -93,7 +95,9 @@ export default function Footer({
           </div>
 
           <div className="col-span-6 text-center md:text-left md:col-span-3">
-            <p className="pb-1 text-lg font-medium">Categories</p>
+            <p className="pb-1 text-lg font-medium">
+              {getString("general", "categories")}
+            </p>
             <ul>
               {categoryLinks.map((link: CategoryLink) => (
                 <CategoryLink key={link.id} {...link} />
@@ -102,7 +106,9 @@ export default function Footer({
           </div>
 
           <div className="col-span-6 text-center md:text-left md:col-span-3">
-            <p className="pb-1 text-lg font-medium">Menu</p>
+            <p className="pb-1 text-lg font-medium">
+              {getString("general", "menu")}
+            </p>
             <ul>
               {menuLinks.map((link: FooterLink) => (
                 <FooterLink key={link.id} {...link} />
@@ -113,7 +119,7 @@ export default function Footer({
         <div className="grid justify-center pt-6 lg:justify-between">
           <div className="flex">
             <span className="mr-2">
-              ©{new Date().getFullYear()} All rights reserved
+              ©{new Date().getFullYear()} {getString("footer", "rights")}
             </span>
             <ul className="flex">
               {legalLinks.map((link: FooterLink) => (

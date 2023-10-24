@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAppSelector } from "@/app/store/hooks";
 
 export default function Logo({
   src,
@@ -9,9 +10,12 @@ export default function Logo({
   src: string | null;
   children?: React.ReactNode;
 }) {
+  const currLang = useAppSelector(
+    (state) => state.languageReducer.currentLanguage
+  );
   return (
     <Link
-      href="/"
+      href={`/${currLang}`}
       aria-label="Back to homepage"
       className="flex items-center p-2"
     >
