@@ -2,6 +2,7 @@ export const it = {
   general: {
     categories: "categorie",
     menu: "menu",
+    "no-post": "Nessun post trovato",
   },
   footer :{
     rights: "Tutti i diritti sono riservati"

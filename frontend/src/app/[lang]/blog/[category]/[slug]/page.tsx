@@ -1,4 +1,5 @@
 import { fetchAPI } from '@/app/[lang]/utils/fetch-api';
+import { translate } from '@/app/[lang]/utils/translate';
 import Post from '@/app/[lang]/views/post';
 import type { Metadata } from 'next';
 
@@ -46,7 +47,7 @@ export async function generateMetadata({ params }: { params: { slug: string, lan
 export default async function PostRoute({ params }: { params: { slug: string, lang:string } }) {
     const { slug, lang } = params;
     const data = await getPostBySlug(slug, lang);
-    if (data.data.length === 0) return <h2>no post found</h2>;
+    if (data.data.length === 0) return <h2>{translate(lang,'general','no-post')}</h2>;
     return <Post data={data.data[0]} />;
 }
 
