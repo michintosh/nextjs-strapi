@@ -106,6 +106,7 @@ In Permissions lets give the following access.
 | Global          |       find       |
 | Page            | find and findOne |
 | Product-feature | find and findOne |
+| i18n            | listLocales      |
 
 ![permissions](https://user-images.githubusercontent.com/6153188/231865625-a3634d89-0f40-4a6d-a356-8f654abd88b9.gif)
 
@@ -139,6 +140,20 @@ Once your environment variables are set you can start your frontend application 
 You should now see your Next JS frontend.
 
 ![frontend](https://user-images.githubusercontent.com/6153188/231865662-d870051f-4503-4a01-bc6b-635c7c5ca40d.png)
+
+## Add a new locale
+
+To add a new locale, first you need to set it up on your frontend in order to be able to recognize the language you're currently switching to.
+
+So you must go over the `i18n-config.ts` file in the frontend project and add the desired locale to the `locales` array.
+
+Next, head over to the Strapi Dashboard, under "Settings" go to "Global Settings / Internationalization".
+
+There, add a new locale matching the code of the one you've just added to you frontend.
+
+Then go and translate just the `Global` single type and the `Home Page` page.
+
+You should be able to see on the main navbar of the frontend the new locale, that should be good to go with the whole project.
 
 ## Start Both Projects Concurrently
 
