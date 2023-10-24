@@ -1,5 +1,7 @@
+'use client'
 import React from "react";
 import Link from "next/link";
+import useTranslations from "@/app/hooks/useTranslations";
 
 interface Category {
   id: number;
@@ -39,9 +41,11 @@ export default function ArticleSelect({
   };
 }) {
 
+  const {getString} = useTranslations()
+
   return (
     <div className="p-4 rounded-lg dark:bg-gray-900 min-h-[365px] relative">
-      <h4 className="text-xl font-semibold">Browse By Category</h4>
+      <h4 className="text-xl font-semibold">{getString('blog','browse')}</h4>
 
       <div>
         <div className="flex flex-wrap py-6 space-x-2 dark:border-gray-400">
@@ -65,11 +69,11 @@ export default function ArticleSelect({
         </div>
 
         <div className="space-y-2">
-          <h4 className="text-lg font-semibold">Other Posts You May Like</h4>
+          <h4 className="text-lg font-semibold">{getString('blog','related')}</h4>
           <ul className="ml-4 space-y-1 list-disc">
             {articles.map((article: Article) => {
               return (
-                <li>
+                <li key={article.id}>
                   <Link
                     rel="noopener noreferrer"
                     href={`/blog/${params.category}/${article.attributes.slug}`}

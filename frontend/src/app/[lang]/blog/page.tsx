@@ -14,7 +14,8 @@ interface Meta {
   };
 }
 
-export default function Profile() {
+export default function BlogPage({params}: { params: { lang: string } }) {
+  const {lang} = params
   const [meta, setMeta] = useState<Meta | undefined>();
   const [data, setData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ export default function Profile() {
             populate: "*",
           },
         },
+        locale:lang,
         pagination: {
           start: start,
           limit: limit,
