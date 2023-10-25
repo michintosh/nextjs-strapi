@@ -7,6 +7,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useAppSelector } from "@/app/store/hooks";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 interface NavLink {
   id: number;
@@ -92,6 +93,7 @@ export default function Navbar({
           </ul>
         </div>
         <LanguageSwitcher locales={locales} />
+        <ThemeSwitcher />
 
         <Dialog
           as="div"

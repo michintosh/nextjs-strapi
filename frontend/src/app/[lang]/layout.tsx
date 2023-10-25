@@ -1,40 +1,38 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { getStrapiMedia, getStrapiURL } from "./utils/api-helpers";
-import { fetchAPI } from "./utils/fetch-api";
+import type { Metadata } from 'next';
+import './globals.css';
+import { getStrapiMedia, getStrapiURL } from './utils/api-helpers';
+import { fetchAPI } from './utils/fetch-api';
 
-import { i18n } from "../../../i18n-config";
-import Banner from "./components/Banner";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
-import { FALLBACK_SEO } from "@/app/[lang]/utils/constants";
-import Link from "next/link";
-import { Providers } from "../store/provider";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import LanguageSwitcher from "./components/LanguageSwitcher";
+import { i18n } from '../../../i18n-config';
+import Banner from './components/Banner';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+import { FALLBACK_SEO } from '@/app/[lang]/utils/constants';
+import { Providers } from '../store/provider';
+
 
 async function getGlobal(lang: string): Promise<any> {
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   if (!token)
-    throw new Error("The Strapi API Token environment variable is not set.");
+    throw new Error('The Strapi API Token environment variable is not set.');
 
   const path = `/global`;
   const options = { headers: { Authorization: `Bearer ${token}` } };
 
   const urlParamsObject = {
     populate: [
-      "metadata.shareImage",
-      "favicon",
-      "notificationBanner.link",
-      "navbar.links",
-      "navbar.navbarLogo.logoImg",
-      "footer.footerLogo.logoImg",
-      "footer.menuLinks",
-      "footer.legalLinks",
-      "footer.socialLinks",
-      "footer.categories",
-      "GlobalSEOImage",
+      'metadata.shareImage',
+      'favicon',
+      'notificationBanner.link',
+      'navbar.links',
+      'navbar.navbarLogo.logoImg',
+      'footer.footerLogo.logoImg',
+      'footer.menuLinks',
+      'footer.legalLinks',
+      'footer.socialLinks',
+      'footer.categories',
+      'GlobalSEOImage',
     ],
     locale: lang,
   };
@@ -46,7 +44,7 @@ async function getLocales(): Promise<
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
   if (!token)
-    throw new Error("The Strapi API Token environment variable is not set.");
+    throw new Error('The Strapi API Token environment variable is not set.');
 
   const path = `/i18n/locales`;
   const options = { headers: { Authorization: `Bearer ${token}` } };
@@ -63,9 +61,9 @@ export async function generateMetadata({
 
   if (!meta.data) return FALLBACK_SEO;
 
-  const { metadata, favicon,GlobalSEOImage } = meta.data.attributes;
+  const { metadata, favicon, GlobalSEOImage } = meta.data.attributes;
   const { url } = favicon.data.attributes;
-  const { url : globalImageUrl } = GlobalSEOImage.data.attributes;
+  const { url: globalImageUrl } = GlobalSEOImage.data.attributes;
 
   return {
     title: metadata.metaTitle,
@@ -74,11 +72,11 @@ export async function generateMetadata({
       icon: [new URL(url, getStrapiURL())],
     },
     openGraph: {
-      type:"website",
-      title:metadata.metaTitle,
-      description:metadata.metaDescription,
-      images:[new URL(globalImageUrl, getStrapiURL())]
-    }
+      type: 'website',
+      title: metadata.metaTitle,
+      description: metadata.metaDescription,
+      images: [new URL(globalImageUrl, getStrapiURL())],
+    },
   };
 }
 
@@ -91,7 +89,7 @@ export default async function RootLayout({
 }) {
   const global = await getGlobal(params.lang);
   const locales = await getLocales();
- 
+
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null;
 
@@ -137,5 +135,5 @@ export default async function RootLayout({
 }
 
 export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }));
+  return i18n.locales.map(locale => ({ lang: locale }));
 }

@@ -36,7 +36,7 @@ const LanguageSwitcher = ({ locales }: IProps) => {
         .map((el) => {
           return (
             <span
-              className={`text-white hover:cursor-pointer ${currLang === el.code && "underline"}`}
+              className={`dark:text-white hover:cursor-pointer ${currLang === el.code && "underline"}`}
               key={el.id}
               onClick={() => dispatch(setLanguage(el.code))}
             >
