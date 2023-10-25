@@ -9,8 +9,6 @@
     "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": false
   },
   "pluginOptions": {
@@ -71,6 +69,19 @@
         }
       },
       "component": "layout.footer"
+    },
+    "GlobalSEOImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "required": true
     }
   }
 }

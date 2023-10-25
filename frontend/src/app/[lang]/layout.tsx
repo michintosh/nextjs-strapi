@@ -34,6 +34,7 @@ async function getGlobal(lang: string): Promise<any> {
       "footer.legalLinks",
       "footer.socialLinks",
       "footer.categories",
+      "GlobalSEOImage",
     ],
     locale: lang,
   };
@@ -62,8 +63,9 @@ export async function generateMetadata({
 
   if (!meta.data) return FALLBACK_SEO;
 
-  const { metadata, favicon } = meta.data.attributes;
+  const { metadata, favicon,GlobalSEOImage } = meta.data.attributes;
   const { url } = favicon.data.attributes;
+  const { url : globalImageUrl } = GlobalSEOImage.data.attributes;
 
   return {
     title: metadata.metaTitle,
@@ -71,6 +73,12 @@ export async function generateMetadata({
     icons: {
       icon: [new URL(url, getStrapiURL())],
     },
+    openGraph: {
+      type:"website",
+      title:metadata.metaTitle,
+      description:metadata.metaDescription,
+      images:[new URL(globalImageUrl, getStrapiURL())]
+    }
   };
 }
 

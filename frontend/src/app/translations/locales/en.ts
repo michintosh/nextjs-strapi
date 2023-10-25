@@ -9,6 +9,8 @@ export const en = {
     rights: "All rights reserved"
   },
   blog :{
+    title: "Our Blog",
+    subtitle: "Checkout Something Cool",
     related: "Other Posts You May Like",
     browse: "Browse by category"
   }

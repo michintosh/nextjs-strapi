@@ -2,6 +2,7 @@ import {sectionRenderer} from "@/app/[lang]/utils/section-renderer";
 import {Metadata} from "next";
 import {getPageBySlug} from "@/app/[lang]/utils/get-page-by-slug";
 import {FALLBACK_SEO} from "@/app/[lang]/utils/constants";
+import { getStrapiURL } from "../utils/api-helpers";
 
 
 type Props = {
@@ -20,7 +21,19 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
     return {
         title: metadata.metaTitle,
-        description: metadata.metaDescription
+        description: metadata.metaDescription,
+        openGraph: {
+            type: 'website',
+            ...(metadata?.metaTitle && { title: metadata?.metaTitle }),
+            ...(metadata?.metaDescription && {
+              description: metadata?.metaDescription,
+            }),
+            ...(metadata?.shareImage?.data?.attributes?.url && {
+              images: [
+                new URL(metadata?.shareImage?.data?.attributes?.url, getStrapiURL()),
+              ],
+            }),
+          },
     }
 }
 

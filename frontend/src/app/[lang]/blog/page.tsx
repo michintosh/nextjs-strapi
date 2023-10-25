@@ -1,10 +1,11 @@
-"use client";
-import { useState, useEffect, useCallback } from "react";
-import { fetchAPI } from "../utils/fetch-api";
+'use client';
+import { useState, useEffect, useCallback } from 'react';
+import { fetchAPI } from '../utils/fetch-api';
 
-import Loader from "../components/Loader";
-import Blog from "../views/blog-list";
-import PageHeader from "../components/PageHeader";
+import Loader from '../components/Loader';
+import Blog from '../views/blog-list';
+import PageHeader from '../components/PageHeader';
+import { translate } from '../utils/translate';
 
 interface Meta {
   pagination: {
@@ -14,8 +15,8 @@ interface Meta {
   };
 }
 
-export default function BlogPage({params}: { params: { lang: string } }) {
-  const {lang} = params
+export default function BlogPage({ params }: { params: { lang: string } }) {
+  const { lang } = params;
   const [meta, setMeta] = useState<Meta | undefined>();
   const [data, setData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
@@ -26,15 +27,15 @@ export default function BlogPage({params}: { params: { lang: string } }) {
       const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
       const path = `/articles`;
       const urlParamsObject = {
-        sort: { createdAt: "desc" },
+        sort: { createdAt: 'desc' },
         populate: {
-          cover: { fields: ["url"] },
-          category: { populate: "*" },
+          cover: { fields: ['url'] },
+          category: { populate: '*' },
           authorsBio: {
-            populate: "*",
+            populate: '*',
           },
         },
-        locale:lang,
+        locale: lang,
         pagination: {
           start: start,
           limit: limit,
@@ -46,7 +47,7 @@ export default function BlogPage({params}: { params: { lang: string } }) {
       if (start === 0) {
         setData(responseData.data);
       } else {
-        setData((prevData: any[] ) => [...prevData, ...responseData.data]);
+        setData((prevData: any[]) => [...prevData, ...responseData.data]);
       }
 
       setMeta(responseData.meta);
@@ -70,7 +71,10 @@ export default function BlogPage({params}: { params: { lang: string } }) {
 
   return (
     <div>
-      <PageHeader heading="Our Blog" text="Checkout Something Cool" />
+      <PageHeader
+        heading={translate(lang, 'blog', 'title')}
+        text={translate(lang, 'blog', 'subtitle')}
+      />
       <Blog data={data}>
         {meta!.pagination.start + meta!.pagination.limit <
           meta!.pagination.total && (
