@@ -1,5 +1,5 @@
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface RichTextProps {
   data: {
