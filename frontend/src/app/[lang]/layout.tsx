@@ -104,7 +104,7 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang={params.lang}>
+    <html lang={params.lang} >
       <Providers>
         <body>
           <Navbar
