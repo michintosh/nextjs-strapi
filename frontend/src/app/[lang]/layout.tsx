@@ -9,7 +9,9 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import { FALLBACK_SEO } from '@/app/[lang]/utils/constants';
 import { Providers } from '../store/provider';
-
+import { Suspense } from 'react';
+import OpenCart from './components/shop/cart/open-cart';
+import Cart from './components/shop/cart';
 
 async function getGlobal(lang: string): Promise<any> {
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -104,7 +106,7 @@ export default async function RootLayout({
   );
 
   return (
-    <html lang={params.lang} >
+    <html lang={params.lang}>
       <Providers>
         <body>
           <Navbar
@@ -112,8 +114,14 @@ export default async function RootLayout({
             logoUrl={navbarLogoUrl}
             logoText={navbar.navbarLogo.logoText}
             locales={locales}
+            cart={
+              <div className="flex justify-end md:w-1/3">
+                <Suspense fallback={<OpenCart />}>
+                  <Cart />
+                </Suspense>
+              </div>
+            }
           />
-
           <main className="dark:bg-black dark:text-gray-100 min-h-screen">
             {children}
           </main>

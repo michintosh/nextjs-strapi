@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useAppSelector } from "@/app/store/hooks";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -65,6 +65,7 @@ export default function Navbar({
   logoUrl,
   logoText,
   locales,
+  cart
 }: {
   links: Array<NavLink>;
   logoUrl: string | null;
@@ -74,13 +75,14 @@ export default function Navbar({
     code: string;
     isDefault: boolean;
   }[];
+  cart: ReactNode
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const closeMenu = () => {
     setMobileMenuOpen(false);
   };
   return (
-    <div className="p-4  bg-white bg-opacity-50 dark:bg-black dark:bg-opacity-60 backdrop-blur-md dark:text-gray-100 sticky top-0">
+    <div className="p-4  bg-white bg-opacity-50 dark:bg-black dark:bg-opacity-60 backdrop-blur-md dark:text-gray-100 sticky top-0 z-10">
       <div className="container flex items-center justify-between h-16 mx-auto px-0 sm:px-6">
         <Logo src={logoUrl}>
           {logoText && <h2 className="text-2xl font-bold">{logoText}</h2>}
@@ -94,6 +96,8 @@ export default function Navbar({
         </div>
         <LanguageSwitcher locales={locales} />
         <ThemeSwitcher />
+        <NavLink newTab={false} text="shop" url="/shop" id={10} />
+        {cart}
 
         <Dialog
           as="div"
