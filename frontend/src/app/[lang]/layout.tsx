@@ -65,7 +65,7 @@ export async function generateMetadata({
 
   const { metadata, favicon, GlobalSEOImage } = meta.data.attributes;
   const { url } = favicon.data.attributes;
-  const { url: globalImageUrl } = GlobalSEOImage.data.attributes;
+  const { url: globalImageUrl } = GlobalSEOImage?.data?.attributes;
 
   return {
     title: metadata.metaTitle,
