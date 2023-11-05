@@ -1,11 +1,16 @@
-import { getCollectionProducts } from '@/app/lib/shopify';
+import { getCollectionProducts, getLatestProducts } from '@/app/lib/shopify';
 import Link from 'next/link';
 import { GridTileImage } from './grid/tile';
 
 export async function Carousel() {
   // Collections that start with `hidden-*` are hidden from the search page.
-  const products = await getCollectionProducts({ collection: 'hidden-homepage-carousel' });
-
+  const products = process.env.NEXT_PUBLIC_SHOPIFY_HAS_COLLECTION === "true"
+  ? await getCollectionProducts({
+    collection: 'hidden-homepage-carousel',
+  })
+  : await getLatestProducts({
+    amount: 6,
+  });
   if (!products?.length) return null;
 
   // Purposefully duplicating products to make the carousel loop and not run out of products on wide screens.
