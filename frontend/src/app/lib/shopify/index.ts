@@ -19,6 +19,7 @@ import {
 import { getMenuQuery } from './queries/menu';
 import { getPageQuery, getPagesQuery } from './queries/page';
 import {
+  getLatestProductsQuery,
   getProductQuery,
   getProductRecommendationsQuery,
   getProductsQuery
@@ -59,7 +60,7 @@ const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 type ExtractVariables<T> = T extends { variables: object } ? T['variables'] : never;
 
 export async function shopifyFetch<T>({
-  cache = 'force-cache',
+  cache = 'no-cache',
   headers,
   query,
   tags,
@@ -139,7 +140,7 @@ const reshapeCollection = (collection: ShopifyCollection): Collection | undefine
 
   return {
     ...collection,
-    path: `/search/${collection.handle}`
+    path: `/shop/search/${collection.handle}`
   };
 };
 
@@ -324,7 +325,7 @@ export async function getCollections(): Promise<Collection[]> {
         title: 'All',
         description: 'All products'
       },
-      path: '/search',
+      path: '/shop/search',
       updatedAt: new Date().toISOString()
     },
     // Filter out the `hidden` collections.
@@ -409,6 +410,27 @@ export async function getProducts({
     tags: [TAGS.products],
     variables: {
       query,
+      reverse,
+      sortKey
+    }
+  });
+
+  return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+}
+export async function getLatestProducts({
+  amount,
+  reverse,
+  sortKey
+}: {
+  amount?: number;
+  reverse?: boolean;
+  sortKey?: string;
+}): Promise<Product[]> {
+  const res = await shopifyFetch<ShopifyProductsOperation>({
+    query: getLatestProductsQuery,
+    tags: [TAGS.products],
+    variables: {
+      amount,
       reverse,
       sortKey
     }

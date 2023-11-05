@@ -21,6 +21,18 @@ export const getProductsQuery = /* GraphQL */ `
   }
   ${productFragment}
 `;
+export const getLatestProductsQuery = /* GraphQL */ `
+  query getProducts($sortKey: ProductSortKeys, $reverse: Boolean, $amount: Int) {
+    products(sortKey: $sortKey, reverse: $reverse, first: $amount) {
+      edges {
+        node {
+          ...product
+        }
+      }
+    }
+  }
+  ${productFragment}
+`;
 
 export const getProductRecommendationsQuery = /* GraphQL */ `
   query getProductRecommendations($productId: ID!) {

@@ -259,6 +259,7 @@ export type ShopifyProductsOperation = {
   };
   variables: {
     query?: string;
+    amount?: number;
     reverse?: boolean;
     sortKey?: string;
   };
