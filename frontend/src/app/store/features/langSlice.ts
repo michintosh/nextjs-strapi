@@ -5,7 +5,7 @@ type LanguageState = {
 };
 
 const initialState = {
-  currentLanguage: "it",
+  currentLanguage: localStorage.getItem("lang")  || "it",
 } as LanguageState;
 
 export const language = createSlice({
@@ -15,6 +15,7 @@ export const language = createSlice({
     reset: () => initialState,
     setLanguage: (state, action: PayloadAction<string>) => {
       state.currentLanguage = action.payload;
+      localStorage.setItem("lang",action.payload)
     },
   },
 });
