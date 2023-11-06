@@ -2,7 +2,8 @@
 import { setLanguage } from "@/app/store/features/langSlice";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import React, { useEffect } from "react";
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { createUrl } from "@/app/lib/utils";
 
 interface IProps {
   locales: {
@@ -15,6 +16,9 @@ interface IProps {
 const LanguageSwitcher = ({ locales }: IProps) => {
   const router = useRouter();
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const newParams = new URLSearchParams(searchParams.toString());
+
 
   const currLang = useAppSelector(
     (state) => state.languageReducer.currentLanguage
@@ -25,7 +29,7 @@ const LanguageSwitcher = ({ locales }: IProps) => {
     const urlLan = pathname.split("/")[1]
     if (currLang !== urlLan) {
       const tmpUrl = pathname.replace(`/${urlLan}`,`/${currLang}`)
-      router.push(tmpUrl)
+      router.replace(createUrl(tmpUrl,newParams))
     }
   }, [currLang]);
 
