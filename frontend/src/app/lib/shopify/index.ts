@@ -17,7 +17,7 @@ import {
   getCollectionsQuery
 } from './queries/collection';
 import { getMenuQuery } from './queries/menu';
-import { getPageQuery, getPagesQuery } from './queries/page';
+import { getPageQuery, getPagesQuery } from './queries/pageShop';
 import {
   getLatestProductsQuery,
   getProductQuery,
